@@ -7,7 +7,8 @@
 Una base de datos es más que datos: es el modelo que asegura que tengan valor y uso.
 
 BASE DE DATOS
-├── Tablas (Entidades)
-│    ├── Filas (Registros)
-│    └── Columnas (Atributos)
-└── Relaciones entre tablas
+- Tablas (Entidades)
+  - Filas (Registros)
+  - Columnas (Atributos)
+- Relaciones entre tablas
+
