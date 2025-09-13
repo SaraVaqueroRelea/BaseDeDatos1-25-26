@@ -6,6 +6,7 @@ En total son 12 reglas; las más importantes:
 # 📜 Las 12 Reglas de Codd (Resumen Continuo)
 
 Codd definió 13 reglas (contando la regla 0) para determinar si un SGBD es verdaderamente relacional.
+
 **Regla 0:** Todo sistema que se diga relacional debe gestionar bases de datos usando exclusivamente sus capacidades relacionales. Ejemplo: poder crear, modificar y consultar todo mediante SQL sin editar archivos a mano.
 
 **1. Regla de Información:** Toda la información debe representarse de forma explícita como valores en tablas. Ejemplo: `SELECT * FROM Cliente;` debe devolver todos los datos sin estructuras ocultas.
