@@ -8,16 +8,16 @@
 La historia muestra la evolución desde el almacenamiento rudimentario hasta sistemas complejos para grandes volúmenes de datos.
 
 
-1880 → Censo USA: 7 años de procesamiento
-1884 → Hollerith inventa la máquina perforadora
-1890 → Resultados en 2,5 años
-1950 → Cintas magnéticas (procesos secuenciales)
-1960 → Discos → acceso directo
-1970 → Codd propone el modelo relacional
-1980 → Tablas, filas, columnas → DB relacionales dominan
-1990 → SQL y bases orientadas a objetos
-2000 → Web, Big Data, bases distribuidas
-2020 → NoSQL, NewSQL, bases en la nube
+- 1880 → Censo USA: 7 años de procesamiento
+- 1884 → Hollerith inventa la máquina perforadora
+- 1890 → Resultados en 2,5 años
+- 1950 → Cintas magnéticas (procesos secuenciales)
+- 1960 → Discos → acceso directo
+- 1970 → Codd propone el modelo relacional
+- 1980 → Tablas, filas, columnas → DB relacionales dominan
+- 1990 → SQL y bases orientadas a objetos
+- 2000 → Web, Big Data, bases distribuidas
+- 2020 → NoSQL, NewSQL, bases en la nube
 
 ## Diagrama comparativo: Archivos planos vs Modelo relacional
 
