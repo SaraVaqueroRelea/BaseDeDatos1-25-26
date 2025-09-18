@@ -63,17 +63,3 @@
 * USUARIO (generalización) → puede ser ENTRENADOR o CLIENTE (usuario estándar).
 * ENTRENADOR → puede ser PERSONAL\_TRAINER o NUTRICIONISTA.
 
----
-
-## 6. Conceptos
-
-* ​**USUARIO**​: persona que usa la plataforma para mejorar su bienestar y belleza.
-* ​**ENTRENADOR**​: profesional que crea rutinas y programas.
-* ​**PERFIL**​: datos personales y metas de bienestar.
-* ​**RUTINA**​: conjunto de ejercicios, cuidado personal o actividades de bienestar.
-* ​**PROGRESO**​: registro del desempeño del usuario en rutinas y objetivos.
-* ​**PRODUCTO**​: artículo de belleza, suplemento o accesorio.
-* ​**RESEÑA**​: valoración de un producto o entrenador.
-* ​**GRUPO**​: comunidad de usuarios con intereses comunes.
-* ​**CATEGORIA**​: clasificación de rutinas o productos según tipo o objetivo.
-

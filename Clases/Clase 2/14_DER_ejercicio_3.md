@@ -13,8 +13,6 @@ RUTINA }o--|| CATEGORIA : "pertenece a"
 PRODUCTO }o--|| CATEGORIA : "pertenece a"
 USUARIO }o--o{ GRUPO : "pertenece a"
 USUARIO ||--o{ ENTRENADOR : "puede ser"
-ENTRENADOR ||--|| PERSONAL_TRAINER : "es un"
-ENTRENADOR ||--|| NUTRICIONISTA : "es un"
 
 USUARIO {
     int id_usuario
