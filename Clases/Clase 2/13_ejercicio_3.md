@@ -1,4 +1,4 @@
-# Ejercicio 3: Plataforma de Bienestar y Belleza
+* # Ejercicio 3: Plataforma de Bienestar y Belleza
 
 ## 1. Lista predefinida de requisitos
 
@@ -29,32 +29,109 @@
 
 ## 3. Identificación de Relaciones
 
-* USUARIO–PERFIL: un usuario tiene un perfil (1:1).
-* USUARIO–RUTINA: un usuario puede seguir varias rutinas (N:M).
-* ENTRENADOR–RUTINA: un entrenador puede crear muchas rutinas (1:N).
-* USUARIO–PROGRESO: un usuario registra múltiples progresos (1:N).
-* USUARIO–PRODUCTO: un usuario puede comprar varios productos (N:M).
-* USUARIO–RESEÑA: un usuario puede escribir varias reseñas (1:N).
-* ENTRENADOR–RESEÑA: un entrenador puede recibir varias reseñas (1:N).
-* RUTINA–CATEGORIA: cada rutina pertenece a una categoría (N:1).
-* PRODUCTO–CATEGORIA: cada producto pertenece a una categoría (N:1).
-* USUARIO–GRUPO: un usuario puede unirse a varios grupos y un grupo puede tener varios usuarios (N:M).
+* **Usuario — Perfil**
+  * `Usuario (1) — tiene — (1) Perfil`
+  * Verbo inverso: `Perfil — es de — Usuario`
+  * Cardinalidad: **1:1** (Perfil existe por/para Usuario).
+  * Nota: implementación física puede ser columna FK en Perfil a Usuario o integrar los campos en Usuario si se prefiere.
+* **Usuario — Grupo**
+  * `Usuario (0..N) — pertenece a — (1..N) Grupo`
+  * Verbo inverso: `Grupo — tiene — Usuario`
+  * Cardinalidad: **N:M** (usuario puede estar en muchos grupos; grupo tiene muchos usuarios).
+* **Usuario — Progreso**
+  * `Usuario (1) — registra — (0..N) Progreso`
+  * `Progreso — es registrado por — Usuario`
+  * Cardinalidad: **1:N**
+* **Usuario — Rutina (seguimiento)**
+  * `Usuario (0..N) — sigue — (0..N) Rutina`
+  * `Rutina — es seguida por — Usuario`
+  * Cardinalidad: **N:M**
+* **Entrenador — Rutina (creación)**
+  * `Entrenador (1) — crea — (0..N) Rutina`
+  * `Rutina — es creada por — Entrenador`
+  * Cardinalidad: **1:N**
+* **Rutina — Categoria**
+  * `Rutina (0..N) — pertenece a — (1) Categoria`
+  * `Categoria — agrupa — Rutina`
+  * Cardinalidad: **N:1** (una rutina pertenece a una categoría; la categoría agrupa muchas rutinas).
+* **Producto — Categoria**
+  * `Producto (0..N) — pertenece a — (1) Categoria`
+  * `Categoria — contiene — Producto`
+  * Cardinalidad: **N:1** (similar a rutinas)
+* **Usuario — Producto (compra)**
+  * `Usuario (0..N) — compra — (0..N) Producto`
+  * `Producto — es comprado por — Usuario`
+  * Cardinalidad: **N:M**
+* **Usuario — Reseña — Producto/Rutina**
+  * `Usuario (1) — escribe — (0..N) Reseña`
+  * `Reseña — es escrita por — Usuario`
+  * `Reseña — sobre — Producto`**(0..N)**
+  * `Reseña — sobre — Rutina`**(0..N)**
+  * **Restricción semántica importante:**​**cada `Reseña` debe referenciar exactamente uno** de (`Producto`, `Rutina`)
+* **Usuario — Pertenece a Grupo** (ya arriba) — recordatorio N:M.
 
 ---
 
 ## 4. Identificación de atributos
 
-| Entidad    | Atributos                                             |
-| ------------ | ------------------------------------------------------- |
-| USUARIO    | id\_usuario, nombre, email, fecha\_nacimiento         |
-| ENTRENADOR | id\_entrenador, nombre, especialidad, certificaciones |
-| PERFIL     | id\_perfil, altura, peso, objetivos, preferencias     |
-| RUTINA     | id\_rutina, nombre, duracion, nivel\_dificultad       |
-| PROGRESO   | id\_progreso, fecha, peso, repeticiones, notas        |
-| PRODUCTO   | id\_producto, nombre, tipo, precio                    |
-| RESEÑA    | id\_resena, contenido, calificacion, fecha            |
-| GRUPO      | id\_grupo, nombre, descripcion                        |
-| CATEGORIA  | id\_categoria, nombre, descripcion                    |
+1. **Usuario** (PK: `id_usuario`)
+   * `id_usuario`**(PK)**
+   * `nombre`
+   * `email`
+   * `fecha_nacimiento`
+   * `telefono` (opcional)
+   * `direccion` (opcional)
+2. **Perfil** (PK: `id_perfil`)
+   * `id_perfil`**(PK)**
+   * `altura`
+   * `peso`
+   * `objetivos` (texto)
+   * `preferencias` (texto / JSON)
+   * **Nota:** vínculo 1:1 con `Usuario` (cada usuario tiene un perfil; el perfil no existe sin usuario).
+3. **Entrenador** (PK: `id_entrenador`) — rol especializado de `Usuario`
+   * `id_entrenador`**(PK)**
+   * `id_usuario`**(referencia conceptual a Usuario)**
+   * `especialidad`
+   * `certificaciones` (lista o texto)
+   * `tipo_entrenador` (ej. `personal_trainer`, `nutricionista`, `otro`)
+   * `bio` (opcional)
+4. **Rutina** (PK: `id_rutina`)
+   * `id_rutina`**(PK)**
+   * `nombre`
+   * `descripcion`
+   * `duracion` (minutos)
+   * `nivel_dificultad` (ej. básico/intermedio/avanzado)
+   * `id_entrenador`**(autor / creador)**
+   * `id_categoria` (opcional)
+5. **Progreso** (PK: `id_progreso`)
+   * `id_progreso`**(PK)**
+   * `id_usuario`**(referencia a Usuario)**
+   * `id_rutina`**(referencia a Rutina, opcional si el progreso es genérico)**
+   * `fecha`
+   * `peso` (valor)
+   * `repeticiones` (entero, opcional)
+   * `notas` (texto)
+6. **Producto** (PK: `id_producto`)
+   * `id_producto`**(PK)**
+   * `nombre`
+   * `descripcion`
+   * `tipo` (ej. suplemento, accesorio, ropa)
+   * `precio`
+   * `stock` (opcional)
+   * `id_categoria` (categoria del producto)
+7. **Categoria** (PK: `id_categoria`)
+   * `id_categoria`**(PK)**
+   * `nombre`
+   * `descripcion`8. **Grupo** (PK: `id_grupo`)
+   * `id_grupo`**(PK)**
+   * `nombre`
+   * `descripcion`8. **Reseña** (PK: `id_resena`)
+   * `id_resena`**(PK)**
+   * `id_usuario`**(autor — referencia a Usuario)**
+   * `contenido`
+   * `calificacion` (e.g. 1–5)
+   * `fecha`
+   * **Vinculación obligatoria a un objetivo:**`id_producto`**OR**`id_rutina`
 
 ---
 

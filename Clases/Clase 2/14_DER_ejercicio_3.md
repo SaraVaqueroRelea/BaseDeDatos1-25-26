@@ -2,82 +2,90 @@
 
 ```mermaid
 erDiagram
-USUARIO ||--o{ PERFIL : "tiene"
-USUARIO }o--o{ RUTINA : "sigue"
-ENTRENADOR ||--o{ RUTINA : "crea"
-USUARIO ||--o{ PROGRESO : "registra"
-USUARIO }o--o{ PRODUCTO : "compra"
-USUARIO ||--o{ RESEÑA : "escribe"
-ENTRENADOR ||--o{ RESEÑA : "recibe"
-RUTINA }o--|| CATEGORIA : "pertenece a"
-PRODUCTO }o--|| CATEGORIA : "pertenece a"
-USUARIO }o--o{ GRUPO : "pertenece a"
-USUARIO ||--o{ ENTRENADOR : "puede ser"
+    %% === ENTIDADES ===
+    USUARIO ||--|| PERFIL : "tiene"
+    USUARIO ||--o{ PROGRESO : "registra"
+    USUARIO }o--o{ GRUPO : "pertenece"
+    USUARIO }o--o{ RUTINA : "sigue"
+    USUARIO }o--o{ PRODUCTO : "compra"
+    USUARIO ||--o{ RESEÑA : "escribe"
 
-USUARIO {
-    int id_usuario
-    string nombre
-    string email
-    date fecha_nacimiento
-}
+    ENTRENADOR ||--|| USUARIO : "es un"
 
-ENTRENADOR {
-    int id_entrenador
-    string nombre
-    string especialidad
-    string certificaciones
-}
+    RUTINA }o--|| CATEGORIA : "pertenece a"
+    PRODUCTO }o--|| CATEGORIA : "pertenece a"
 
-PERSONAL_TRAINER ||--|| ENTRENADOR : "es un"
-NUTRICIONISTA ||--|| ENTRENADOR : "es un"
+    RESEÑA }o--|| RUTINA : "sobre "
+    RESEÑA }o--|| PRODUCTO : "sobre "
+    PROGRESO }o--|| RUTINA : "corresponde_a"
 
-PERFIL {
-    int id_perfil
-    float altura
-    float peso
-    string objetivos
-    string preferencias
-}
+    %% === ATRIBUTOS PRINCIPALES ===
+    USUARIO {
+        int id_usuario PK
+        string nombre
+        string email
+        date fecha_nacimiento
+    }
 
-RUTINA {
-    int id_rutina
-    string nombre
-    int duracion
-    string nivel_dificultad
-}
+    PERFIL {
+        int id_perfil PK
+        float altura
+        float peso
+        string objetivos
+        string preferencias
+    }
 
-PROGRESO {
-    int id_progreso
-    date fecha
-    float peso
-    int repeticiones
-    string notas
-}
+    ENTRENADOR {
+        int id_entrenador PK
+        string especialidad
+        string certificaciones
+        enum tipo_entrenador
+    }
 
-PRODUCTO {
-    int id_producto
-    string nombre
-    string tipo
-    decimal precio
-}
+    RUTINA {
+        int id_rutina PK
+        string nombre
+        string descripcion
+        int duracion
+        string nivel_dificultad
+    }
 
-RESEÑA {
-    int id_resena
-    string contenido
-    int calificacion
-    date fecha
-}
+    PROGRESO {
+        int id_progreso PK
+        date fecha
+        float peso
+        int repeticiones
+        string notas
+    }
 
-GRUPO {
-    int id_grupo
-    string nombre
-    string descripcion
-}
+    PRODUCTO {
+        int id_producto PK
+        string nombre
+        string descripcion
+        string tipo
+        decimal precio
+    }
 
-CATEGORIA {
-    int id_categoria
-    string nombre
-    string descripcion
-}
+    CATEGORIA {
+        int id_categoria PK
+        string nombre
+        string descripcion
+        int id_parent_categoria FK
+    }
+
+    GRUPO {
+        int id_grupo PK
+        string nombre
+        string descripcion
+        enum privacidad
+    }
+
+    RESEÑA {
+        int id_resena PK
+        string contenido
+        int calificacion
+        date fecha
+        %% NOTA: debe referenciar exactamente a un producto O una rutina
+    }
 ```
 

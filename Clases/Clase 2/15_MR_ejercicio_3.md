@@ -2,66 +2,71 @@
 
 ```mermaid
 erDiagram
-    %% ==== RELACIONES PRINCIPALES ====
-    USUARIO ||--o{ PERFIL : "tiene"
+    %% ==== RELACIONES ====
+    USUARIO ||--|| PERFIL : "tiene"
+    USUARIO ||--o{ PROGRESO : "registra"
+    USUARIO ||--o{ USUARIO_GRUPO : "pertenece"
+    GRUPO ||--o{ USUARIO_GRUPO : "tiene"
     USUARIO ||--o{ USUARIO_RUTINA : "sigue"
     RUTINA ||--o{ USUARIO_RUTINA : "seguida por"
     ENTRENADOR ||--o{ RUTINA : "crea"
-    USUARIO ||--o{ PROGRESO : "registra"
-    USUARIO ||--o{ USUARIO_PRODUCTO : "compra"
-    PRODUCTO ||--o{ USUARIO_PRODUCTO : "comprado en"
-    USUARIO ||--o{ RESEÑA : "escribe"
-    ENTRENADOR ||--o{ RESEÑA : "recibe"
     RUTINA }o--|| CATEGORIA : "pertenece a"
     PRODUCTO }o--|| CATEGORIA : "pertenece a"
-    USUARIO ||--o{ USUARIO_GRUPO : "pertenece"
-    GRUPO ||--o{ USUARIO_GRUPO : "tiene"
-    USUARIO ||--o{ ENTRENADOR : "puede ser"
+    USUARIO ||--o{ COMPRA : "compra"
+    COMPRA }o--|| PRODUCTO : "de"
+    USUARIO ||--o{ RESENA : "escribe"
+    RESENA }o--|| PRODUCTO : "sobre"
+    RESENA }o--|| RUTINA : "sobre"
 
     %% ==== TABLAS ====
     USUARIO {
-        int id_usuario PK
+        int id_usuario
         string nombre
         string email
         date fecha_nacimiento
-    }
-
-    ENTRENADOR {
-        int id_entrenador PK
-        int id_usuario FK
-        string nombre
-        string especialidad
-        string certificaciones
-        enum tipo_entrenador  "personal_trainer | nutricionista | otro"
+        string telefono
+        string direccion
     }
 
     PERFIL {
-        int id_perfil PK
-        int id_usuario FK
+        int id_perfil
+        int id_usuario
         float altura
         float peso
         string objetivos
         string preferencias
     }
 
+    ENTRENADOR {
+        int id_entrenador
+        int id_usuario
+        string especialidad
+        string certificaciones
+        string tipo_entrenador
+        string bio
+    }
+
     RUTINA {
-        int id_rutina PK
-        int id_entrenador FK
+        int id_rutina
+        int id_entrenador
         string nombre
+        string descripcion
         int duracion
         string nivel_dificultad
-        int id_categoria FK
+        int id_categoria
     }
 
     USUARIO_RUTINA {
-        int id_usuario FK
-        int id_rutina FK
+        int id_usuario
+        int id_rutina
         date fecha_inicio
+        string estado
     }
 
     PROGRESO {
-        int id_progreso PK
-        int id_usuario FK
+        int id_progreso
+        int id_usuario
+        int id_rutina
         date fecha
         float peso
         int repeticiones
@@ -69,44 +74,51 @@ erDiagram
     }
 
     PRODUCTO {
-        int id_producto PK
+        int id_producto
         string nombre
+        string descripcion
         string tipo
         decimal precio
-        int id_categoria FK
+        int stock
+        int id_categoria
     }
 
-    USUARIO_PRODUCTO {
-        int id_usuario FK
-        int id_producto FK
-        date fecha_compra
+    COMPRA {
+        int id_compra
+        int id_usuario
+        int id_producto
         int cantidad
+        decimal precio_comprado
+        date fecha_compra
     }
 
-    RESEÑA {
-        int id_resena PK
-        int id_usuario FK
-        int id_entrenador FK
+    RESENA {
+        int id_resena
+        int id_usuario
+        int id_rutina
         string contenido
         int calificacion
         date fecha
     }
 
     GRUPO {
-        int id_grupo PK
+        int id_grupo
         string nombre
         string descripcion
+        string privacidad
     }
 
     USUARIO_GRUPO {
-        int id_usuario FK
-        int id_grupo FK
+        int id_usuario
+        int id_grupo
+        date fecha_union
     }
 
     CATEGORIA {
-        int id_categoria PK
+        int id_categoria
         string nombre
         string descripcion
+        int id_parent_categoria
     }
 ```
 
